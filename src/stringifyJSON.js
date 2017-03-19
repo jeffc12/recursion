@@ -6,6 +6,7 @@
 var stringifyJSON = function(obj) {
   // your code goes here
 //test for array
+//console.log(obj);
     var array = [];
       if (Array.isArray(obj)) {
 
@@ -25,21 +26,21 @@ var stringifyJSON = function(obj) {
 // Test if obect
 
 if (typeof obj === 'object') {
-
-
+  console.log(obj);
+  var objArray =[];
     for (var i in obj) {
-      if (typeof(obj[i]) === 'function' || obj[i] === undefined) {
-        continue;
+      if (typeof(obj[i]) === 'function' || obj[i] === undefined || !obj[i] || typeof(i) === 'function') {
+        return '{}';
       }
-
-
-      array.push(stringifyJSON(i) + ':'+stringifyJSON(obj[i]));
     }
     //console.log(array);
-    array = '{'+array+'}';
+    array.push(stringifyJSON(i) + ': '+stringifyJSON(obj[i]));
+    console.log(objArray);
+    objArray = '{'+objArray+'}';
 
-    return array;
-  }
+    return objArray;
+    }
+
 
 
   // test if the object
@@ -48,14 +49,9 @@ if (typeof obj === 'object') {
 
     return '"'+ obj +'"';
   }
+  else {
 
-  if  (typeof obj === 'number') {
-
-    return obj.toString();
-  }
-  if  (typeof obj === 'boolean' || obj === null) {
-    //console.log(obj.toString());
-    return obj.toString();
+    return '' +obj;
   }
 
 };
@@ -63,3 +59,4 @@ if (typeof obj === 'object') {
 //test
 //console.log(stringifyJSON(['hi', 0,true, -0.3, 0.3, 1343.32, 3345, 0.00011999999999999999]));
 //console.log(stringifyJSON({'a': 'hi', 'b':true}));
+console.log(stringifyJSON({}));
