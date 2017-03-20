@@ -7,17 +7,12 @@ var stringifyJSON = function(obj) {
   // your code goes here
 //test for array
 //console.log(obj);
-
     var array = [];
       if (Array.isArray(obj)) {
 
-          if (obj[0] === undefined) {
-              return '['+array+']';
-            }
             obj.forEach(function(index){
 
               array.push(stringifyJSON(index));
-
             })
 
             return '['+array+']';
@@ -28,16 +23,19 @@ var stringifyJSON = function(obj) {
 /// using underscore (new plan)
 //
 var objArray = [];
+// test if this is an object
+// deep test for protoype chain and protoype props
+if (obj instanceof Object) {
 
-if (typeof obj === 'object') {
+// underscore for each to cycle key and value of an object
 _.each(obj, function(value,key) {
-
-  objArray.push(stringifyJSON(key) + ':' + stringifyJSON(val));
+  if ((value) === undefined || typeof value === 'function') {
+     return;
+    }
+  objArray.push(stringifyJSON(key) + ':' + stringifyJSON(value));
 
 })
-
   return '{'+ objArray +'}';
-
 }
 
   // test if the object
@@ -46,19 +44,14 @@ _.each(obj, function(value,key) {
 
     return '"'+ obj +'"';
   }
-  if (typeof obj === null) {
+  if (obj === null) {
     return 'null';
   }
   if (typeof obj === 'function' || obj === undefined) {
-    continue;
+    return;
   }
   else {
-    return obj.toString()
+    return obj.toString();
   }
 
 };
-
-//test
-//console.log(stringifyJSON(['hi', 0,true, -0.3, 0.3, 1343.32, 3345, 0.00011999999999999999]));
-//console.log(stringifyJSON({'a': 'hi', 'b':true}));
-console.log(stringifyJSON({}));
