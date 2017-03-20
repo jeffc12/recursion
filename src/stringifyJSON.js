@@ -7,6 +7,7 @@ var stringifyJSON = function(obj) {
   // your code goes here
 //test for array
 //console.log(obj);
+
     var array = [];
       if (Array.isArray(obj)) {
 
@@ -24,24 +25,20 @@ var stringifyJSON = function(obj) {
       }
 
 // Test if obect
+/// using underscore (new plan)
+//
+var objArray = [];
 
 if (typeof obj === 'object') {
-  console.log(obj);
-  var objArray =[];
-    for (var i in obj) {
-      if (typeof(obj[i]) === 'function' || obj[i] === undefined || !obj[i] || typeof(i) === 'function') {
-        return '{}';
-      }
-    }
-    //console.log(array);
-    array.push(stringifyJSON(i) + ': '+stringifyJSON(obj[i]));
-    console.log(objArray);
-    objArray = '{'+objArray+'}';
+_.each(obj, function(value,key) {
 
-    return objArray;
-    }
+  objArray.push(stringifyJSON(key) + ':' + stringifyJSON(val));
 
+})
 
+  return '{'+ objArray +'}';
+
+}
 
   // test if the object
 //console.log(obj);
@@ -49,9 +46,14 @@ if (typeof obj === 'object') {
 
     return '"'+ obj +'"';
   }
+  if (typeof obj === null) {
+    return 'null';
+  }
+  if (typeof obj === 'function' || obj === undefined) {
+    continue;
+  }
   else {
-
-    return '' +obj;
+    return obj.toString()
   }
 
 };
